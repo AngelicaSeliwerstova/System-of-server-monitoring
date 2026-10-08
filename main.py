@@ -67,18 +67,18 @@ class ServerMonitor:
         return max_source
 
     def filter_by_level(self, level):
-        filtred_events = []
+        filtered_events = []
         for eventp in self.events:
             if eventp.level == level:
-                filtred_events.append(eventp)
-        return filtred_events
+                filtered_events.append(eventp)
+        return filtered_events
 
     def filter_by_source(self, source):
-        filtred_2_events = []
+        filtered_2_events = []
         for eventp in self.events:
             if eventp.source == source:
-                filtred_2_events.append(eventp)
-        return filtred_2_events
+                filtered_2_events.append(eventp)
+        return filtered_2_events
 
     def last_error(self):
         for event in reversed(self.events):
@@ -101,7 +101,7 @@ class Report:
         print("WARNING:", self.monitor.count_warnings())
         print("INFO:", self.monitor.count_info())
         print("Статус:", self.status())
-        print("Самый проблемый модуль:", self.monitor.most_problematic_source())
+        print("Самый проблемный модуль:", self.monitor.most_problematic_source())
         print("События:")
         for event in self.monitor.events:
             print(event)
@@ -139,26 +139,26 @@ monitor.add_event(log2)
 monitor.add_event(log3)
 
 report = Report(monitor)
-print("Моя госпожа, что показать?")
+print("Выберите действие")
 print("1-Полный отчет")
 print("2-Только ERRORS")
 print("3-Только WARNINGS")
 print("4-Только INFO")
 print("5-События конкретного модуля")
-choise = input("Введите номер: ")
-if choise == "1":
+choice = input("Введите номер: ")
+if choice == "1":
     report.show()
-elif choise == "2":
+elif choice == "2":
     print("===ERROR_EVENTS===")
     report.show_events(monitor.filter_by_level("ERROR"))
-elif choise == "3":
+elif choice == "3":
     print("===WARNING_EVENTS===")
     report.show_events(monitor.filter_by_level("WARNING"))
-elif choise == "4":
+elif choice == "4":
     print("===INFO_EVENTS===")
     report.show_events(monitor.filter_by_level("INFO"))
-elif choise == "5":
-    source = input("введите событие конкретного модуля,например,datbase,ap: ")
+elif choice == "5":
+    source = input("введите событие конкретного модуля,например,database,ap: ")
     print(f"===EVENTS_FROM {source} ===")
     report.show_events((monitor.filter_by_source(source)))
 else:
